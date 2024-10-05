@@ -8,6 +8,11 @@ import type { AppLoadContext, EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import createEmotionCache from "~/createEmotionCache";
+import createEmotionServer from "@emotion/server/create-instance";
+import {CacheProvider} from "@emotion/react";
+import {CssBaseline, ThemeProvider} from "@mui/material";
+import theme from "../public/mui/theme";
 
 export default async function handleRequest(
   request: Request,
@@ -19,8 +24,27 @@ export default async function handleRequest(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext
 ) {
+  const cache = createEmotionCache()
+  const {extractCriticalToChunks} = createEmotionServer(cache)
+
+  function MuiRemixServer() {
+    return (
+        <CacheProvider value={cache}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <RemixServer context={remixContext} url={request.url}/>
+          </ThemeProvider>
+        </CacheProvider>
+    )
+  }
+
   const body = await renderToReadableStream(
-    <RemixServer context={remixContext} url={request.url} />,
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline/>
+          <RemixServer context={remixContext} url={request.url}/>
+        </ThemeProvider>
+      </CacheProvider>,
     {
       signal: request.signal,
       onError(error: unknown) {

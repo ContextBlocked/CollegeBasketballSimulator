@@ -6,6 +6,11 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  ssr: {
+    target: 'node',
+    noExternal: ["@remixicon/react"],
+  },
+
   plugins: [
     remixCloudflareDevProxy(),
     remix({

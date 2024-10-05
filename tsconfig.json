@@ -8,7 +8,7 @@
     "**/.client/**/*.tsx"
   ],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "lib": ["DOM", "DOM.Iterable", "ES2022", "es6"],
     "types": [
         "@remix-run/cloudflare",
         "vite/client",
@@ -29,7 +29,10 @@
     "paths": {
       "~/*": ["./app/*"]
     },
-
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
     // Vite takes care of building everything, not tsc.
     "noEmit": true
   }

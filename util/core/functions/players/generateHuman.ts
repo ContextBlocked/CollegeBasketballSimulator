@@ -19,16 +19,16 @@ export interface IHuman {
     weight: number,
     Nationality: string,
 }
-function generateFirstName(): string { return firstNames[getRandom(0,100)]}
-function generateLastName(): string { return lastNames[getRandom(0,100)]}
+function generateFirstName(): string { return firstNames[getRandom(0,100) - 1]}
+function generateLastName(): string { return lastNames[getRandom(0,100) - 1]}
 export function generateRandomHuman(props: IPreHuman) {
     const num = getRandom(0,5)
     const position = props.position ?? Positions.find((position) => position.id === num)
     if (!props.firstName) props.firstName = generateFirstName()
     if (!props.lastName) props.lastName = generateLastName()
-    if (!props.Age) props.Age = getRandom(18, 25)
+    if (!props.Age) props.Age = getRandom(18, 25) - 1
     if (!props.height) props.height = getRandom(position?.minHeight, position?.maxHeight)
     if (!props.weight) props.weight = getRandom(position?.minWeight, position?.maxWeight)
-    if (!props.Nationality) props.Nationality = nationalities[getRandom(0,50)]
+    if (!props.Nationality) props.Nationality = nationalities[getRandom(0,50) - 1]
     return props as IHuman
 }

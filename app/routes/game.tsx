@@ -9,9 +9,9 @@ type Props = {
 
 export default function Game(props: Props) {
     return (
-        <Grid key={'gameGrid'} spacing={2} container direction={'row'}>
+        <Grid key={'gameGrid'} container direction={'row'}>
             <Sidebar/>
-            <Grid size={'grow'}>
+            <Grid offset={2} size={'grow'}>
                 <Outlet/>
             </Grid>
 

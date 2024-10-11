@@ -16,7 +16,7 @@ import {
 import {delay} from "../../../util/core/numbers";
 import {pbpmessage} from "../../../public/pbpWorker";
 import {pbpWorker} from "~/reducers/pbpReducer/definepbp";
-import {Scoreboard} from "~/components/md/scoreboard";
+import {Scoreboard} from "~/.client/scoreboard";
 import {set} from "zod";
 
 type Props = {
@@ -78,6 +78,8 @@ export default function PlayByPlay(props: Props) {
     });
     const pbpworker = useContext(pbpWorker) as React.Context<Worker>
     function logstat(event: playByPlayEvent) {
+        console.log(teamStats)
+        console.log(event)
         setTeamStats(prevStats => {
             let newStats = {...prevStats}
             //console.log(event)
@@ -201,7 +203,7 @@ export default function PlayByPlay(props: Props) {
             }
 
         }
-
+        pbpworker.postMessage(props.log?.log)
         const waitforLog = async () => {
             for (let i = 0; i < 10; i++) {
                 broadcast({
@@ -213,11 +215,13 @@ export default function PlayByPlay(props: Props) {
                 await delay(1000)
 
                 if (initialized) {
-                    pbpworker.postMessage(props.log?.log)
-                    break
+                    console.log("in1")
+
+                    return
                 }
 
                 if (i === 4) {
+                    console.log("in2")
                     pbpworker.postMessage(props.log?.log)
                 }
             }
@@ -232,12 +236,13 @@ export default function PlayByPlay(props: Props) {
     }, [props.log]);
 
     return (<Grid>
-            <Scoreboard points={[teamStats.team1.Points, teamStats.team2.Points]} teams={[props.flavorTeams[0].name, props.flavorTeams[1].name]} time={time}/>
+            <Scoreboard time={time} teams={[props.flavorTeams[0].name, props.flavorTeams[1].name]} points={[teamStats.team1.Points, teamStats.team2.Points]}/>
+
             <Grid offset={3} size={6} bgcolor={'secondary.main'} minHeight={400} maxHeight={500} marginBottom={50} sx={{overflowX: 'hidden', msOverflowStyle: 'none', scrollbarWidth: 'none'}} overflow={'scroll'}>
-            <Timeline  sx={{
+                <Timeline  sx={{
                 [`& .${timelineOppositeContentClasses.root}`]: {
                     flex: 0.2,
-                }, marginLeft: '25%'
+                }, marginLeft: '15%'
             }}>
 
                     {plays}

@@ -4,14 +4,15 @@ import {createGameDayPlayer} from "../../../util/core/functions/players/createGa
 import {IPlayer} from "../../../util/core/functions/players/generatePlayer";
 import {ITeam} from "../../../util/core/data/playstyles";
 import {GameSim, statType} from "../../../util/core/simulation/run";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {PlayByPlayLogger} from "../../../util/core/simulation/playByPlay/playByPlayLogger";
 import {Box, Grid} from "@mui/system";
 import {Button, Grow} from "@mui/material";
 import {createITeam} from "../../../util/core/functions/teams/createITeam";
 import PlayByPlay from "~/components/md/playByPlay";
-import {Scoreboard} from "~/components/md/scoreboard";
-
+import {Scoreboard} from "~/.client/scoreboard";
+import { motion, useAnimate } from "framer-motion"
+import {GameWindow} from "~/.client/gameWindow";
 type Props = {
 
 };
@@ -72,13 +73,14 @@ export default function GameSimulation(props: Props) {
     const [pbp, setPbp] = useState<PlayByPlayLogger>()
     const [postGameTeams, setPostGameTeams] = useState([simTeam1, simTeam2])
     const [playersOnCourt, setPlayersOnCourt] = useState([[], []])
-
+    const gameWindowRef = useRef(null)
     const game = new GameSim({
         gid: 1,
         teams: [simTeam1, simTeam2 ],
         pbpLog: new PlayByPlayLogger([simTeam1, simTeam2], [flavorTeams[0], flavorTeams[1]])
     })
 
+    const [gamewindow, setGamewindow] = useState<boolean>()
     function run() {
         game.run()
         setPoints([game.teams[0]?.stats.point, game.teams[1]?.stats.point])
@@ -88,18 +90,19 @@ export default function GameSimulation(props: Props) {
         setPostGameTeams(game.teams)
         // @ts-ignore
         setPlayersOnCourt(game.playersOnCourt)
+        // @ts-ignore
+        gameWindowRef.current.scrollIntoView({ behavior: 'smooth' })
+        setGamewindow(true)
     }
 
     let worker: Worker
 
+
     return (
         <Grid size={12} justifyItems={'center'} justifyContent={'center'} alignItems={'center'} alignContent={'center'}>
-            <Button sx={{marginTop: 5}} fullWidth onClick={run}>Play Game</Button>
-            <Grow in={transition} >
-                <div>
-                    <PlayByPlay log={pbp} teams={postGameTeams} flavorTeams={[flavorTeams[0], flavorTeams[1]]} playersonCourt={playersOnCourt}/>
-                </div>
-                </Grow>
+            <Button disableRipple sx={{marginTop: 5}} fullWidth onClick={run}>Play Game</Button>
+            {gamewindow ? <GameWindow pbp={pbp} postGameTeams={postGameTeams} flavorTeams={[flavorTeams[0], flavorTeams[1]]} playersOnCourt={playersOnCourt}/>
+                : <Box sx={{ height: 500, paddingTop: 300}} ref={gameWindowRef}></Box>}
         </Grid>
     );
 };

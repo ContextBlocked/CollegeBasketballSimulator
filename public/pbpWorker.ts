@@ -16,14 +16,13 @@ pbpbroadcast.onmessage = function(e: MessageEvent<pbpmessage>) {
 
 }
 
-let speed = 1
+let speed = 20
 const broadcast = new BroadcastChannel("speed")
 broadcast.onmessage = function(e: MessageEvent<number>) {
     speed = e.data
 
 }
 function getPlayerFromPid (pid: number, team: teamNum) {
-    console.log(teams)
    const player = teams[team].players.find(player => player.id === pid)
     return player.player.human.firstName + " " + player.player.human.lastName
 }
@@ -118,7 +117,13 @@ function generateFlavorText(event: playByPlayEvent) {
     }
 }
 let nextspeed = 100
+let simulating = false
 onmessage = async function(e: MessageEvent<playByPlayEvent[]>) {
+    if (simulating) {
+        return
+    }
+    simulating = true
+
     let index = 0;
     let accumulatedTime = 0;
     //console.log("started")

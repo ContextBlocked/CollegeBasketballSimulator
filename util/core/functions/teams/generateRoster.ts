@@ -1,6 +1,6 @@
 
 import {toString} from "mdast-util-to-string";
-import {Position, Positions} from "../../data/positions";
+import {Position, Positions} from "../../data/defined/positions";
 import {getRandom} from "../../numbers";
 import {generatePlayer, IPlayer} from "../players/generatePlayer";
 import {generateRandomHuman} from "../players/generateHuman";

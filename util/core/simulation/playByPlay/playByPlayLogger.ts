@@ -1,5 +1,5 @@
 import {GameDayTeam, statType} from "../run";
-import {ITeam} from "../../data/playstyles";
+import {ITeam} from "../../../../public/playstyles";
 
 type TeamNum = 0 | 1
 export type PlayByPlayEventScore = | {

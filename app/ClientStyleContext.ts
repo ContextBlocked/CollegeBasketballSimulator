@@ -4,6 +4,6 @@ export interface ClientStyleContextData {
     reset: () => void;
 }
 
-export default React.createContext<ClientStyleContextData>({
+export const ClientStyleContext =  React.createContext<ClientStyleContextData>({
     reset: () => {},
 });

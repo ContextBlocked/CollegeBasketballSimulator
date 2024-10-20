@@ -1,7 +1,7 @@
-import {ITeam, offInside} from "../../data/playstyles";
+import {ITeam, offInside} from "../../../../public/playstyles";
 import {generateRoster} from "./generateRoster";
 
-export function createITeam(name: string, id: number): ITeam {
+export function generateITeam(name: string, id: number): ITeam {
     if (!name) name = "New Team"
 
          return ({

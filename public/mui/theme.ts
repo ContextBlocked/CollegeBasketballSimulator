@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import type {} from '@mui/lab/themeAugmentation'
+import {responsiveFontSizes} from "@mui/material";
 const primary = {
     main: '#1E3A8A',
     dark: '#1A3275',
@@ -41,6 +42,7 @@ theme = createTheme(theme, {
         })
     }
 })
+theme = responsiveFontSizes(theme);
 
 declare module '@mui/material/styles' {
     interface Palette {

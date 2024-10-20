@@ -24,7 +24,7 @@ export default function Sidebar(props: Props) {
         <Link to={'/game/play/newgame'}>
             <Button startIcon={<RiPlayLargeLine/>}  sx={{height: 50, justifyContent: 'flex-start'}} variant={'text'} >Play</Button>
         </Link>
-            <Link to={'/game/teams'}>
+            <Link to={'/game/teams/view'}>
             <Button startIcon={<RiTeamLine/>} sx={{height: 50, justifyContent: 'flex-start'}} variant={'text'}>Teams</Button>
         </Link>
             <Link to={'/game/stats'}>

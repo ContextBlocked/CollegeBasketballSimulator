@@ -1,9 +1,10 @@
 // @flow
 import * as React from 'react';
-import {Box, Container, Grid} from "@mui/system";
-import {IconButton, Paper, Typography, Link} from "@mui/material";
+import {Box, Container, fontWeight, Grid} from "@mui/system";
+import {IconButton, Paper, Typography} from "@mui/material";
 import {TeamsTableItem} from "~/components/sm/teamsTableItem";
 import {RiArrowRightLine} from "@remixicon/react";
+import {Link, NavLink} from "@remix-run/react";
 
 type Props = {
 
@@ -44,13 +45,11 @@ let filledTeams = [
 
 export function TeamsTable(props: Props) {
     const teamsMap = teams.map((team, index) => {
-        return (
             <TeamsTableItem name={team} wins={0} losses={index} created={'2021-10-10'}/>
-        )
     })
-    console.log(teamsMap)
+    //console.log(teamsMap)
     const noTeams = <Box><Typography textTransform={'capitalize'} variant={'h4'} color={'textDisabled'} sx={{paddingTop: '20%'}}>Teams you create will appear here...</Typography>
-        <Link href={'#'}>Create a Team</Link></Box>
+        <NavLink style={{textDecoration: 'underline'}} to={'/game/teams/createTeam'}>Create a Team</NavLink></Box>
 
     return (
         <Grid textAlign={'center'} container marginTop={10} size={'grow'}>

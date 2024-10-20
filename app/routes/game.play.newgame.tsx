@@ -19,9 +19,9 @@ export default function GamePlayNewgame(props: Props) {
         setAwayTeam(e.target.value);
     }
     return (
-        <Grid container size={'grow'}>
+        <Grid marginTop={5} container size={'grow'}>
             <Grid size={12}>
-                <Typography textAlign={'center'} variant={'subtitle1'}>Select your teams</Typography>
+                <Typography textAlign={'center'} variant={'h4'}>Select your teams</Typography>
             </Grid>
             <Grid size={12}>
                 <Card sx={{borderRadius: 4}} variant={'outlined'} raised >

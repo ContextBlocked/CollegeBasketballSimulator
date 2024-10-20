@@ -1,4 +1,4 @@
-import {IPlayer} from "../functions/players/generatePlayer";
+import {IPlayer} from "../util/core/functions/players/generatePlayer";
 
 export type teamOffensePlaystyle = "Balanced" | "Outside" | "Inside" | "Star" | "Motion"
 export type teamDefensePlaystyle = "Man2Man" | "Outside" | "Inside" | "Star" | "noGuards"

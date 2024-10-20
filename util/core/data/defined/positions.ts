@@ -1,7 +1,7 @@
 
-import {positionSettings} from "../../settings/positionSettings";
-import {IHuman} from "../functions/players/generateHuman";
-import {getRandom} from "../numbers";
+import {positionSettings} from "../../../settings/positionSettings";
+import {IHuman} from "../../functions/players/generateHuman";
+import {getRandom} from "../../numbers";
 
 type PGarchetypes  = "Playmaker" | "Sharpshooter" | "Combo Guard";
 export interface Position {

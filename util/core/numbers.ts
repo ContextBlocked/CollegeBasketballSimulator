@@ -1,4 +1,4 @@
-import {Position} from "./data/positions";
+import {Position} from "./data/defined/positions";
 
 interface props {
     min?: number;

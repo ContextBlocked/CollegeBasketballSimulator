@@ -4,7 +4,7 @@ import PlayByPlay from "~/components/md/playByPlay";
 import {motion, useAnimate} from "framer-motion";
 import {GameDayTeam} from "../../util/core/simulation/run";
 import {PlayByPlayLogger} from "../../util/core/simulation/playByPlay";
-import {ITeam} from "../../util/core/data/playstyles";
+import {ITeam} from "../../public/playstyles";
 
 type Props = {
     pbp: PlayByPlayLogger | undefined,

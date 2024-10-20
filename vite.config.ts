@@ -4,13 +4,21 @@ import {
 } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import {remixPWA} from "@remix-pwa/dev";
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        worker: './app/entry.worker.ts',
+      }
+    }
+  },
   ssr: {
     target: 'node',
     noExternal: ["@remixicon/react"],
   },
-
   plugins: [
     remixCloudflareDevProxy(),
     remix({
@@ -21,5 +29,6 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+      remixPWA(),
   ],
 });

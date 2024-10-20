@@ -1,7 +1,7 @@
 
 import {generateRandomHuman, IHuman} from "./generateHuman";
-import {getRandomPossiblePosition, Position} from "../../data/positions";
-import {getOverall, getPhysicalRatings, getScoringRatings, getSkillRatings, IRatings} from "../../data/ratings";
+import {getRandomPossiblePosition, Position} from "../../data/defined/positions";
+import {getOverall, getPhysicalRatings, getScoringRatings, getSkillRatings, IRatings} from "../../data/defined/ratings";
 
 interface props {
     Overall?: number,

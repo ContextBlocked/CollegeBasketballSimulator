@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {playByPlayEvent, PlayByPlayLogger} from "../../../util/core/simulation/playByPlay/playByPlayLogger";
 import {GameDayPlayer, GameDayTeam} from "../../../util/core/simulation/run";
-import {ITeam} from "../../../util/core/data/playstyles";
+import {ITeam} from "../../../public/playstyles";
 import useChannel from "~/hooks/useChannel";
 import {useContext, useEffect} from "react";
 import {Box, Grid, Stack} from "@mui/system";
@@ -76,10 +76,10 @@ export default function PlayByPlay(props: Props) {
             }
         }
     });
-    const pbpworker = useContext(pbpWorker) as React.Context<Worker>
+    const pbpworker = useContext(pbpWorker) as Worker
     function logstat(event: playByPlayEvent) {
-        console.log(teamStats)
-        console.log(event)
+        //console.log(teamStats)
+        //console.log(event)
         setTeamStats(prevStats => {
             let newStats = {...prevStats}
             //console.log(event)
@@ -195,6 +195,7 @@ export default function PlayByPlay(props: Props) {
             //console.log(e.data)
             setTime(e.data[1].time)
             if (e.data[1].type === "stat") {
+                console.log("logging" + e.data[1].stat)
                 logstat(e.data[1])
                 //console.log(teamStats)
             } else {
@@ -227,12 +228,6 @@ export default function PlayByPlay(props: Props) {
             }
         }
         waitforLog()
-
-
-        //console.log(props.log.log)
-
-
-
     }, [props.log]);
 
     return (<Grid>

@@ -2,13 +2,13 @@
 import * as React from 'react';
 import {createGameDayPlayer} from "../../../util/core/functions/players/createGameDayPlayer";
 import {IPlayer} from "../../../util/core/functions/players/generatePlayer";
-import {ITeam} from "../../../util/core/data/playstyles";
+import {ITeam} from "../../../public/playstyles";
 import {GameSim, statType} from "../../../util/core/simulation/run";
 import {useRef, useState} from "react";
 import {PlayByPlayLogger} from "../../../util/core/simulation/playByPlay/playByPlayLogger";
 import {Box, Grid} from "@mui/system";
 import {Button, Grow} from "@mui/material";
-import {createITeam} from "../../../util/core/functions/teams/createITeam";
+import {generateITeam} from "../../../util/core/functions/teams/generateITeam";
 import PlayByPlay from "~/components/md/playByPlay";
 import {Scoreboard} from "~/.client/scoreboard";
 import { motion, useAnimate } from "framer-motion"
@@ -65,7 +65,7 @@ export default function GameSimulation(props: Props) {
     const [spoiler , setSpoiler] = useState(false)
     const [transition , setTransition] = useState(false)
     const speedchannel = new BroadcastChannel("speed")
-    const [flavorTeams, setFlavorTeams] = useState([createITeam('Sixers', 1), createITeam('Lakers', 2)])
+    const [flavorTeams, setFlavorTeams] = useState([generateITeam('Sixers', 1), generateITeam('Lakers', 2)])
 
     let simTeam1 = createTeam(flavorTeams[0])
     let simTeam2 = createTeam(flavorTeams[1])

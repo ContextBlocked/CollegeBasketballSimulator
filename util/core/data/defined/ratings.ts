@@ -1,6 +1,6 @@
 import {Position} from "./positions";
-import {IHuman} from "../functions/players/generateHuman";
-import {calculateHeightRating, calculateWeightRating, getBoostRange, getRandom} from "../numbers";
+import {IHuman} from "../../functions/players/generateHuman";
+import {calculateHeightRating, calculateWeightRating, getBoostRange, getRandom} from "../../numbers";
 
 export interface IPhysicalRatings {
     Height: number;

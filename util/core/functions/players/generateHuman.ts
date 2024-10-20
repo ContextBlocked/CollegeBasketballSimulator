@@ -1,5 +1,5 @@
-import {Position, Positions} from "../../data/positions";
-import {firstNames, lastNames, nationalities} from "../../data/names";
+import {Position, Positions} from "../../data/defined/positions";
+import {firstNames, lastNames, nationalities} from "../../data/defined/names";
 import {getRandom} from "../../numbers";
 
 export interface IPreHuman {
@@ -29,6 +29,6 @@ export function generateRandomHuman(props: IPreHuman) {
     if (!props.Age) props.Age = getRandom(18, 25) - 1
     if (!props.height) props.height = getRandom(position?.minHeight, position?.maxHeight)
     if (!props.weight) props.weight = getRandom(position?.minWeight, position?.maxWeight)
-    if (!props.Nationality) props.Nationality = nationalities[getRandom(0,50) - 1]
+    if (!props.Nationality) props.Nationality = nationalities[getRandom(0,nationalities.length) - 1]
     return props as IHuman
 }

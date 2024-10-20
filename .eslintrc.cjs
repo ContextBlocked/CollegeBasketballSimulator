@@ -6,6 +6,7 @@
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
+
   root: true,
   parserOptions: {
     ecmaVersion: "latest",
@@ -52,6 +53,14 @@ module.exports = {
 
     // Typescript
     {
+      rules: {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@mui/*/*/*"]
+          }
+        ]
+      },
       files: ["**/*.{ts,tsx}"],
       plugins: ["@typescript-eslint", "import"],
       parser: "@typescript-eslint/parser",

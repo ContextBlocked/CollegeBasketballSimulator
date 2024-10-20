@@ -10,7 +10,7 @@ import { hydrateRoot } from "react-dom/client";
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../public/mui/theme";
 import createEmotionCache from "~/createEmotionCache";
-import ClientStyleContext from "~/ClientStyleContext";
+import {ClientStyleContext} from "~/ClientStyleContext";
 import {CacheProvider} from "@emotion/react";
 import {pbpWorker} from "~/reducers/pbpReducer/definepbp";
 

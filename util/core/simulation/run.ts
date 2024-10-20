@@ -2,8 +2,8 @@ import {simSettings} from "../../settings/simSettings";
 import {GameSimBase} from "./gameSimBase";
 import {getRandom, uniform} from "../numbers";
 import {IPlayer} from "../functions/players/generatePlayer";
-import {offInside, offOutside, offPlaystyle, offStar, teamDefensePlaystyle} from "../data/playstyles";
-import {Positions} from "../data/positions";
+import {offInside, offOutside, offPlaystyle, offStar, teamDefensePlaystyle} from "../../../public/playstyles";
+import {Positions} from "../data/defined/positions";
 import {PlayByPlayLogger} from "./playByPlay/playByPlayLogger";
 
 

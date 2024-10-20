@@ -29,12 +29,13 @@ export default function GamePlay(props: Props) {
         setTab(newValue);
     }
     return (
-        <Grid spacing={3} size={12} container minWidth={'20%'} maxWidth={'80%'}>
-            <Grid size={12}>
-                <Typography sx={{fontWeight: 'semibold'}} variant={'h3'} textAlign={'center'}>Play</Typography>
+        <Grid container>
+            <Grid size={8}>
+                <Typography sx={{fontWeight: 'bold'}} variant={'h1'} textAlign={'center'}>Play</Typography>
             </Grid>
 
-            <Grid  offset={2} size={2}>
+            <Grid columnGap={2} size={10} direction={'row'} container>
+            <Grid size={2}>
                 <Card elevation={0} color={'seondary.main'} sx={{maxWidth: 200, maxHeight: 150, backgroundColor: 'secondary.main'}}>
                     <CardContent sx={{paddingBottom: 0}}>
                         <Typography sx={{fontWeight: 'bold'}} color={'secondary.contrastText'}>PHI VS LAL</Typography>
@@ -66,15 +67,19 @@ export default function GamePlay(props: Props) {
                     </CardActions>
                 </Card>
             </Grid>
-            <Grid offset={5} size={1}>
+                <Grid offset={4}>
                 <Typography>Team:</Typography>
-                <Select sx={{minWidth: 150}} value={team} onChange={changeTeam}>
+                <Select sx={{minWidth: 150, maxHeight: 50}} value={team} onChange={changeTeam}>
                     <MenuItem value={'Philadelphia'}>Philadelphia</MenuItem>
                     <MenuItem value={'Los Angeles'}>Los Angeles</MenuItem>
                     <MenuItem value={'Chicago'}>Chicago</MenuItem>
                 </Select>
+                </Grid>
             </Grid>
-            <Outlet/>
+            <Grid size={8}>
+                <Outlet/>
+            </Grid>
+
         </Grid>
     );
 };

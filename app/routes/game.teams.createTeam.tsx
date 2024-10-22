@@ -61,9 +61,7 @@ export const workerAction = async ({request, context}: WorkerActionArgs)=>  {
 }
 
 export default function GameTeamsCreateTeam(props: Props) {
-    const [nameRef, hometownRef, primaryColorRef, secondaryColorRef] = [useRef(null), useRef(null), useRef(null), useRef(null)]
     const fetcher = useFetcher()
-
     const [activeStep, setActiveStep] = React.useState(0);
     const [team, setTeam] = React.useState<ITeam>({
        id: 0,
@@ -157,11 +155,6 @@ export default function GameTeamsCreateTeam(props: Props) {
     return (
         <Grid container>
             <fetcher.Form>
-                <TextField name={'name'} value={team.name} hidden/>
-                <TextField name={'primaryColor'} value={team.primaryColor} hidden/>
-                <TextField name={'secondaryColor'} value={team.secondaryColor} hidden/>
-                <TextField name={'hometown'} value={team.hometown} hidden/>
-                <TextField name={'roster'} value={JSON.stringify(team.roster)} hidden/>
                 <Grid size={8}>
                 <Typography textAlign={'center'} fontWeight={'bold'} variant={'h1'}>Create A Team</Typography>
             </Grid>
@@ -170,8 +163,7 @@ export default function GameTeamsCreateTeam(props: Props) {
             </Grid>
 
             <Grid marginLeft={-15} marginTop={5} size={12}>
-                {error ? <Alert severity={'error'} sx={{marginBottom: 5}}>{error}</Alert> : null}
-                {success ? <Alert severity={'success'} sx={{marginBottom: 5}}>Team created successfully. Redirecting...</Alert> : null}
+                {error !== '' && error !== 'success' ? <Alert severity={'error'} sx={{marginBottom: 5}}>{error}</Alert> : error === 'success'  ? <Alert severity={'success'} sx={{marginBottom: 5}}>Team created successfully. Redirecting...</Alert> : null}
                 <Grid marginBottom={5} container>
                     <Grid size={6}>
                         <Button onClick={back} color={'secondary'} variant={'contained'} sx={{marginLeft: '40%', width: '20%'}}>Back</Button>

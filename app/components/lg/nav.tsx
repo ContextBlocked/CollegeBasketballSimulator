@@ -1,34 +1,47 @@
 // @flow
-import * as React from 'react';
-import {Box, Container, Grid} from "@mui/system";
-import {Button, ButtonGroup, Typography} from "@mui/material";
-import {siteSettings} from "../../../util/settings/siteSettings";
+import * as React from "react";
+import { Box, Container, Grid } from "@mui/system";
+import {
+  Button,
+  ButtonGroup,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { siteSettings } from "../../../util/settings/siteSettings";
+import theme from "~/mui/theme";
 
-type Props = {
-
-};
+type Props = {};
 
 export function Nav(props: Props) {
-    return (
-        <Box zIndex={100} borderBottom={'black'} height={60} bgcolor={'primary.main'} color={'primary.contrastText'}>
-            <Grid minHeight={'100%'} display={'flex'} container alignItems={'center'} spacing={10} columns={30}>
-            <Grid size={10}>
-                <Container>
-                    <Typography fontSize={'x-large'} sx={{fontWeight: 'bold'}}>{siteSettings.siteName}</Typography>
-                </Container>
-            </Grid>
-            <Grid textAlign={'center'} size={10}>
-
-            </Grid>
-                <Grid textAlign={'center'} size={7}>
-                    <Container>
-                        <ButtonGroup size={'large'} color={'inherit'} disableRipple>
-                            <Button variant={'text'}>Login</Button>
-                            <Button variant={'text'}>Signup</Button>
-                        </ButtonGroup>
-                    </Container>
-                </Grid>
-            </Grid>
-        </Box>
-    );
-};
+  const sm = useMediaQuery(theme.breakpoints.up("xs"));
+  return (
+    <Grid
+      gap={0}
+      borderBottom={"black"}
+      bgcolor={"primary.main"}
+      color={"primary.contrastText"}
+      container
+      alignItems={"center"}
+      height={"8vh"}
+      width={"100vw"}
+      maxWidth={1}
+      margin={0}
+    >
+      <Grid size={"grow"}>
+        <Typography paddingLeft={2} fontWeight={"bold"} variant={"h2"}>
+          {siteSettings.siteName}
+        </Typography>
+      </Grid>
+      <Grid
+        offset={0}
+        size={{ xs: 5, sm: 4, md: 4, lg: 5, xl: 4 }}
+        textAlign={"center"}
+      >
+        <Button fullWidth color={"inherit"} size={"large"} variant={"text"}>
+          Log in
+        </Button>
+      </Grid>
+    </Grid>
+  );
+}

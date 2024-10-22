@@ -5,15 +5,18 @@
  */
 
 import type { AppLoadContext, EntryContext } from "@remix-run/node";
-import { RemixServer } from "@remix-run/react";
+import {defer, RemixServer} from "@remix-run/react";
 import { isbot } from "isbot";
-import ReactDOMServer, { renderToReadableStream } from "react-dom/server";
+import ReactDOMServer, {renderToReadableStream, renderToString} from "react-dom/server";
 import createEmotionCache from "~/createEmotionCache";
 import createEmotionServer from "@emotion/server/create-instance";
 import {CacheProvider} from "@emotion/react";
 import {CssBaseline, ThemeProvider} from "@mui/material";
-import theme from "../public/mui/theme";
+import theme from "./mui/theme";
 import React from "react";
+import createCache from "@emotion/cache";
+import {Head} from "~/root";
+import {MuiProvider} from "~/mui/MuiProvider";
 
 export default async function handleRequest(
   request: Request,
@@ -25,43 +28,19 @@ export default async function handleRequest(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext
 ) {
-  const cache = createEmotionCache()
-  const {extractCriticalToChunks} = createEmotionServer(cache)
+
 
   function MuiRemixServer() {
     return (
-        <CacheProvider value={cache}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <RemixServer context={remixContext} url={request.url}/>
-          </ThemeProvider>
-        </CacheProvider>
+              <MuiProvider>
+                  <RemixServer context={remixContext} url={request.url}/>
+              </MuiProvider>
     )
   }
-  const html = ReactDOMServer.renderToString(<MuiRemixServer/>)
-
-    const { styles } = extractCriticalToChunks(html)
-    let stylesHTML = '';
-
-    styles.forEach(({ key, ids, css }) => {
-        const emotionKey = `${key} ${ids.join(' ')}`;
-        const newStyleTag = `<style data-emotion="${emotionKey}">${css}</style>`;
-        stylesHTML = `${stylesHTML}${newStyleTag}`;
-    });
-
-    // Add the Emotion style tags after the insertion point meta tag
-    const markup = html.replace(
-        /<meta(\s)*name="emotion-insertion-point"(\s)*content="emotion-insertion-point"(\s)*\/>/,
-        `<meta name="emotion-insertion-point" content="emotion-insertion-point"/>${stylesHTML}`,
-    );
 
   const body = await renderToReadableStream(
-      <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline/>
-          <RemixServer context={remixContext} url={request.url}/>
-        </ThemeProvider>
-      </CacheProvider>,
+
+          <RemixServer context={remixContext} url={request.url}/>,
     {
       signal: request.signal,
       onError(error: unknown) {
@@ -77,7 +56,7 @@ export default async function handleRequest(
   }
 
   responseHeaders.set("Content-Type", "text/html");
-    return new Response(`<!DOCTYPE html>${markup}`, {
+    return new Response(body, {
         status: responseStatusCode,
         headers: responseHeaders,
     });

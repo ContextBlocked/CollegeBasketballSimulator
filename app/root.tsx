@@ -10,7 +10,7 @@ import {
 import "./tailwind.css";
 import {CssBaseline, ThemeProvider, Typography} from "@mui/material";
 import {Nav} from "~/components/lg/nav";
-import theme from "../public/mui/theme";
+import theme from "./mui/theme";
 import 'remixicon/fonts/remixicon.css'
 import {useContext, useEffect, useLayoutEffect} from "react";
 import '././assets/button.css'
@@ -19,46 +19,39 @@ import {usePWAManager} from "@remix-pwa/client";
 import {withEmotionCache} from "@emotion/react";
 import {ClientStyleContext} from "~/ClientStyleContext";
 import useEnhancedEffect from "@mui/utils/useEnhancedEffect";
-
-
+import {ClientOnly} from 'remix-utils/client-only'
+import {createPortal} from "react-dom";
+import createCache from "@emotion/cache";
+import {MuiMeta} from "~/mui/MuiMeta";
+import {getMuiLinks} from "~/mui/getMuiLinks";
+import {MuiDocument} from "~/mui/MuiDocument";
 
 interface DocumentProps {
   children: React.ReactNode;
   title?: string;
 }
+export const links: LinksFunction = () => [...getMuiLinks()];
 
-const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache) => {
-  const clientStyleData = useContext(ClientStyleContext);
+//https://github.com/mahmoudmoravej/remix-mui/tree/main
+export function Head() {
+  return (
+      <head>
 
-  useLayoutEffect(() => {
-    // re-link sheet container
-    emotionCache.sheet.container = document.head;
-    // re-inject tags
-    const tags = emotionCache.sheet.tags;
-    emotionCache.sheet.flush();
-    tags.forEach((tag) => {
-      (emotionCache.sheet as any)._insertTag(tag);
-    });
-    // reset cache to reapply global styles
-    clientStyleData.reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        <meta charSet="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <Meta/>
+        <ManifestLink/>
+        <Links />
+      </head>
+  )
+}
 
+
+
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-    <head>
-      <meta charSet="utf-8"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1"/>
-      <Meta/>
-      <ManifestLink/>
-      <Links/>
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""/>
-      <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      />
-    </head>
+    <Head/>
     <body>
     <ThemeProvider theme={theme}>
       <nav>
@@ -69,7 +62,7 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
     </body>
     </html>
   );
-})
+}
 
 export default function App() {
 
@@ -79,7 +72,8 @@ export default function App() {
     revalidator.revalidate()
   }, []);
   return (
-      <Document><Outlet />
+      <MuiDocument>
+        <Outlet />
     {swUpdate.isUpdateAvailable && (
         <div className='bg-background text-foreground fixed bottom-6 right-6'>
           <p>Update available</p>
@@ -89,6 +83,6 @@ export default function App() {
           }}>Reload</button>
         </div>
     )}
-  </Document>
+  </MuiDocument>
   );
 }

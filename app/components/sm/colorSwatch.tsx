@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {Button} from "@mui/base/Button";
+import {Button} from "@mui/material";
 import {colorPickerProps} from "~/components/md/colorPicker";
 
 type Props = {

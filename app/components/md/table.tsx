@@ -64,7 +64,7 @@ export function Table(props: Props) {
     ////console.log(s.every((child) => child === undefined))
 
     return (
-        <Grid textAlign={'center'} container marginTop={10} size={'grow'}>
+        <Grid textAlign={'center'} container size={'grow'}>
             <Paper elevation={12} sx={{minWidth: '70%', minHeight: 400, maxHeight: 600, maxWidth: '70%'}}>
                 <Box maxHeight={'10%'}>
 

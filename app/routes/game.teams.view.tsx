@@ -1,18 +1,19 @@
 // @flow
 import * as React from 'react';
 import {Grid} from "@mui/system";
-import { Typography} from "@mui/material";
+import {Button, Stack, Typography} from "@mui/material";
 import {Table} from "~/components/md/table";
-import { ITeam } from '../../public/playstyles';
-import {defer, useLoaderData} from "@remix-run/react";
+import {defer, Link, useLoaderData} from "@remix-run/react";
 import {WorkerLoaderArgs} from "@remix-pwa/sw";
-import {TableItem} from "~/components/sm/tableItem";
 import {WorkerContext} from "~/entry.worker";
-import {json} from "@remix-run/node";
+import {TableItem} from "~/components/sm/tableItem";
+import {ITeam} from "../../public/playstyles";
+import {json} from "@remix-run/router/utils";
 
 type Props = {
 
 };
+
 export async function loader() {
     return json({teams: []})
 }
@@ -45,31 +46,39 @@ export const workerLoader = async ({context}: WorkerLoaderArgs) => {
 }
 export default function GameTeamsView(props: Props) {
     console.log('sdsd')
-    const { teams } = useLoaderData<typeof loader>()
-    console.log(JSON.stringify(teams))
-    console.log('adsaasf')
-    /* const teams = teamsDB?.map((team) => {
-
+    const { teams } = useLoaderData<loader>()
+    console.log(teams);
+    const teamsMap = teams?.map((team: ITeam) => {
        return (
             <TableItem data={[team.id, team.name, team.hometown]}>
 
             </TableItem>
         )
-    })*/
+    })
     return (
         <Grid container>
             <Grid size={8}>
                 <Typography textAlign={'center'} fontWeight={'bold'} variant={'h1'}>Teams</Typography>
             </Grid>
 
-            <Grid container size={12}>
+
+            <Grid marginTop={10} gap={2} direction={'column'} container size={12}>
+
+                <Grid offset={6}>
+                    <Link to={'/game/teams/createTeam'}>
+                        <Button size={'medium'} variant={'contained'}>Create a new team</Button>
+                    </Link>
+                </Grid>
+
                 <Table emptyMessage={'Teams you create will appear here...'} columnNames={['id', 'Name', 'Hometown']}>
 
+                    {teamsMap}
 
                 </Table>
 
-            </Grid>
 
+
+            </Grid>
         </Grid>
     );
 };
